@@ -1,0 +1,26 @@
+services:
+  laravel:
+    build:
+      context: ./laravel
+      dockerfile: Dockerfile.prod
+    image: savinnsk/laravel-alpine:prod
+    container_name: laravel
+    #volumes:
+    #  - /laravel:/var/www/
+    networks:
+      - laranet
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: savinnsk/nginx-alpine:latest
+    container_name: nginx
+    networks:
+      - laranet
+    ports:
+      - "8080:80"
+
+networks:
+  laranet:
+    driver: bridge

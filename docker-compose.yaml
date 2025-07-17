@@ -1,0 +1,21 @@
+services:
+  db:
+    image: mysql:5.7
+    container_name: dbmysql
+    command: --innodb-use-native-aio=0
+    # entrypoint: dockerize -wait tcp://db:3306 -timeout 20s
+    # depends_on: db
+    restart: always
+    tty: true 
+    volumes: 
+      - ./mysql:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+    networks:
+      - nodenet
+
+networks:
+  nodenet:
+    driver: bridge
